@@ -1,3 +1,10 @@
+'''
+market
+
+source for market bot
+
+
+'''
 import numpy as np
 import scipy.stats
 
@@ -18,8 +25,8 @@ TODO::4.0
 - derivatives
 
 """
-IPO_AMOUNT = 420_000
-IPO_PRICE = 69
+IPO_AMOUNT = 500_000
+IPO_PRICE = 50
 
 DEF_STIMULUS = 1e-4
 DEF_INFLATION = .0015
@@ -42,6 +49,10 @@ def log(s):
 
 
 class PriceModel:
+  '''
+  evaluates stock price based on outstanding shares
+  cash value of a trade is determined by summing all prices for that amount of shares
+  '''
     def __init__(self, ipo_price, total_shares):
         self.ipo_price = ipo_price
         self.total_shares = total_shares
@@ -66,6 +77,10 @@ class PriceModel:
 
 
 class MarketMaker:
+  '''
+  market maker entity
+  holds all outstanding shares and an unlimited amount of cash
+  '''
   def __init__(self):
     self.stocks = {}
     self.portfolios = {}
@@ -193,6 +208,9 @@ class MarketMaker:
 MARKET = MarketMaker()
 
 class Fed:
+  '''
+  voting system that manipulates the cash positions of all participants
+  '''
   def __init__(self, stimulus, inflation):
     self.stimulus = stimulus
     self.inflation = inflation
@@ -224,6 +242,10 @@ class Fed:
 FED = Fed(DEF_STIMULUS, DEF_INFLATION)
 
 class Portfolio:
+  '''
+  a user's portfolio
+  tracks the amount of each symbol that a user owns
+  '''
   #TODO: track basis throughout. use basis to determine total market cap
   def __init__(self, symbol, shares, cash):
     self.symbol = symbol
@@ -291,6 +313,9 @@ class Portfolio:
 
 
 class Position:
+  '''
+  a functional link that connects a position owner to a symbol
+  '''
   COLS = ['Symbol', 'Price', 'Average', 'Amount', 'Basis', 'G/L', 'Value']
   COLH = '{:<12}{:>8}{:>12}{:>12}{:>16}{:>16}{:>16}'
   COLF = '{:<12}{:>8.3f}{:>12.3f}{:>12d}{:>16.3e}{:>16.3e}{:>16.3e}'
@@ -333,6 +358,10 @@ class Position:
 
 
 class Ticker:
+  '''
+  a stock symbol
+  maintains a list of all shareholders, the original owner, and current price
+  '''
   COLS = ['Symbol', 'Price', 'Outstanding', 'Maj.Owner']
   COLH = '{:<12}{:>8}{:>12}{:>12}'
   COLF = '{:<12}{:>8.3f}{:>12d}{:>12}'
