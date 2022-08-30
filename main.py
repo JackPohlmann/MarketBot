@@ -1,3 +1,9 @@
+'''
+main
+
+entrypoint for the bot.
+reads flagged messages and delegates them to the appropriate bot calls
+'''
 import discord
 
 import os
@@ -205,6 +211,7 @@ async def inflate(message):
   return
   
 async def market_p(message):
+  # list all market participants
   await send(message.channel, market.MARKET.print_market())
   return
 

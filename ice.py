@@ -1,3 +1,10 @@
+'''
+ice
+
+persistence library.
+use json to save and load objects
+'''
+
 import json
 
 import market as m
